@@ -4,18 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class OrdenarPoligono {
-	
-	
-	public int OrdenarPoligono implements Comparator<Poligono> {
-		int resultado = 0;
-		return resultado;
-	}
-	
-	
-	public int compareTo(Poligono o2) {
-		int resultado;
-		if(this)
-	}
 	//lista estática con los polígonos que guardaremos
 	static ArrayList<Poligono> listaPoligonos=new ArrayList<>();
 	
@@ -51,9 +39,10 @@ public class OrdenarPoligono {
 		
 		//ordenamos la lista antes de mostrarla
 		Collections.sort(listaPoligonos);
-		
 		mostrarLista();
 
 	}
+	
+	
 
 }

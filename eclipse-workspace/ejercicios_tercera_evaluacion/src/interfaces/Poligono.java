@@ -1,8 +1,6 @@
 package interfaces;
 
-import java.util.Objects;
-
-public class Poligono {
+public class Poligono implements Comparable<Poligono> {
 
 	// propiedades
 	private int num_lados;
@@ -10,8 +8,12 @@ public class Poligono {
 
 	// constructores
 	public Poligono(int num_lados, double lado) {
-		this.setLado(lado);
-		this.setNum_lados(num_lados);
+		try {
+			this.setLado(lado);
+			this.setNum_lados(num_lados);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	public void setNum_lados(int num_lados) {
@@ -37,56 +39,55 @@ public class Poligono {
 	}
 
 	public double damePerimetro() {
-		return this.getNum_lados() * this.getLado();
+		return getNum_lados() * getLado();
 	}
 
 	@Override
 	public String toString() {
-		return " [Lados: " + this.getNum_lados() + " * Perimetro: " + this.damePerimetro() + "]";
+		return " [Lados: " + getNum_lados() + " * Perimetro: " + damePerimetro() + "]";
 	}
-//
-//	public boolean equals (Object o) {
-//		boolean sonIguales = false;
-//		
-//		if(o instanceof Poligono) {
-//			Poligono otroP=(Poligono)o
-//		}
-//	}
-	
 
-	public int compareTo(Poligono o) {
-		int resultado = 0;
-		if (this.getNum_lados() < o.getNum_lados()) {
-			resultado = -1;
-
-		} else if (this.getNum_lados() > o.getNum_lados()) {
-			resultado = +1;
-		} else {
-			if (this.getLado() > o.getLado()) {
-				resultado = -1;
-			} else if (this.getLado() > o.getLado()) {
-				resultado = +1;
-			} else {
-				resultado = 0;
+	@Override
+	public boolean equals (Object o) {
+		boolean sonIguales=false;
+		
+		if (o instanceof Poligono) {
+			//hacemos conversión descendente
+			Poligono otroP=(Poligono)o;
+			if (this.getNum_lados()==otroP.getNum_lados() && this.getLado()==otroP.lado) {
+				sonIguales=true;
 			}
-
+			
+		}
+		return sonIguales;
+	}
+	
+	@Override
+	public int compareTo(Poligono o) {
+		int resultado;
+		if (this.getNum_lados() <o.getNum_lados()) {
+			resultado=-1;
+		} else if (this.getNum_lados() > o.getNum_lados()) {
+			resultado=+1;
+		} else { // si tienen igual  número de lados...
+			//decidir en función de la longitud del lado
+			Double longitud1= Double.valueOf(this.getLado());
+			Double longitud2= Double.valueOf(o.getLado());
+			resultado= longitud1.compareTo(longitud2);
+			
+//			if (this.getLado()<o.getLado()) {
+//				resultado=-1;
+//			} else if ( this.getLado() > o.getLado()){
+//				resultado=+1;
+//			} else {
+//				resultado=0;
+//			}
+			
+			
 		}
 		return resultado;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(lado, num_lados);
-	}
+	
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Poligono))
-			return false;
-		Poligono other = (Poligono) obj;
-		return Double.doubleToLongBits(lado) == Double.doubleToLongBits(other.lado) && num_lados == other.num_lados;
-	}
-
-} // fin de la clase
+}
